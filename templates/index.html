@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Housing Price Estimator | Professional Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --secondary: #64748b;
+        --success: #10b981;
+        --error: #ef4444;
+        --light-bg: #f8fafc;
+        --card-bg: #ffffff;
+        --border: #e2e8f0;
+        --text: #334155;
+        --text-light: #64748b;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --radius: 8px;
+      }
+      
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background-color: var(--light-bg);
+        padding: 0;
+        margin: 0;
+        min-height: 100vh;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+      }
+      
+      header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      
+      h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1.125rem;
+        color: var(--text-light);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      
+      .card {
+        background-color: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+        font-size: 0.875rem;
+        text-transform: capitalize;
+      }
+      
+      input {
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 1rem;
+        transition: all 0.2s ease;
+      }
+      
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+      
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.875rem 1.75rem;
+        background-color: var(--primary);
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+      }
+      
+      .btn:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+      
+      .btn:active {
+        transform: translateY(0);
+      }
+      
+      .result-container {
+        margin-top: 2rem;
+      }
+      
+      .result {
+        padding: 1.5rem;
+        background-color: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: var(--radius);
+        color: #065f46;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .result:before {
+        content: "✓";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: var(--success);
+        color: white;
+        border-radius: 50%;
+        font-size: 0.875rem;
+      }
+      
+      .error {
+        padding: 1.5rem;
+        background-color: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: var(--radius);
+        color: #991b1b;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .error:before {
+        content: "!";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: var(--error);
+        color: white;
+        border-radius: 50%;
+        font-size: 0.875rem;
+        font-weight: bold;
+      }
+      
+      hr {
+        border: none;
+        height: 1px;
+        background-color: var(--border);
+        margin: 2.5rem 0;
+      }
+      
+      .api-section {
+        margin-top: 2.5rem;
+      }
+      
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #1e293b;
+      }
+      
+      code {
+        background-color: #f1f5f9;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        font-size: 0.875rem;
+        color: #475569;
+      }
+      
+      .code-block {
+        background-color: #1e293b;
+        color: #e2e8f0;
+        padding: 1.25rem;
+        border-radius: var(--radius);
+        margin: 1rem 0;
+        overflow-x: auto;
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+      
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        color: var(--text-light);
+        font-size: 0.875rem;
+      }
+      
+      @media (max-width: 768px) {
+        .container {
+          padding: 1.5rem 1rem;
+        }
+        
+        h1 {
+          font-size: 1.875rem;
+        }
+        
+        .card {
+          padding: 1.5rem;
+        }
+        
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Housing Price Estimator</h1>
+        <p class="subtitle">Enter property features to receive an accurate price estimate using advanced machine learning</p>
+      </header>
+      
+      <div class="card">
+        <form method="post">
+          <div class="form-grid">
+            {% for name in feature_names %}
+            <div class="form-group">
+              <label for="{{name}}">{{name.replace('_', ' ')}}</label>
+              <input step="any" id="{{name}}" name="{{name}}" value="{{ defaults[name] }}" required />
+            </div>
+            {% endfor %}
+          </div>
+          
+          <button type="submit" class="btn">Estimate Price</button>
+        </form>
+        
+        {% if result %}
+          <div class="result-container">
+            <div class="result">{{ result }}</div>
+          </div>
+        {% endif %}
+        
+        {% if error %}
+          <div class="result-container">
+            <div class="error">Error: {{ error }}</div>
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- <div class="api-section">
+        <h3>API Access</h3>
+        <p>You can also access this estimator programmatically via our API:</p>
+        
+        <div class="code-block">
+          <p>POST /api/predict</p>
+          <p>Content-Type: application/json</p>
+          <br>
+          <p>{</p>
+          <p>&nbsp;&nbsp;"{{ feature_names[0] }}": value,</p>
+          <p>&nbsp;&nbsp;"{{ feature_names[1] }}": value,</p>
+          <p>&nbsp;&nbsp;...</p>
+          <p>}</p>
+        </div>
+        
+        <p>Response example:</p>
+        <div class="code-block">
+          <p>{</p>
+          <p>&nbsp;&nbsp;"predicted_price": 450000.0</p>
+          <p>}</p>
+        </div>
+      </div>
+       -->
+      <div class="footer">
+        <p>© 2023 Housing Price Estimator | Professional Tool</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
+
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Price Estimator</title>
+    <style>
+      body { font-family: system-ui, Arial; max-width: 800px; margin: 2rem auto; padding: 1rem; }
+      label { display:block; margin-top:0.5rem }
+      input { width: 100%; padding: 0.5rem; }
+      .row { display:flex; gap:1rem }
+      .col { flex:1 }
+      button { margin-top: 1rem; padding: 0.7rem 1rem }
+      .result { margin-top:1rem; padding:1rem; background:#eef; border-radius:6px }
+      .error { margin-top:1rem; padding:1rem; background:#fee; border-radius:6px }
+    </style>
+  </head>
+  <body>
+    <h1>Housing Price Estimator</h1>
+    <p>Enter the features below (these match the California housing dataset) and click <strong>Estimate</strong>.</p>
+
+    <form method="post">
+      {% for name in feature_names %}
+      <label for="{{name}}">{{name}}</label>
+      <input step="any" id="{{name}}" name="{{name}}" value="{{ defaults[name] }}" required />
+      {% endfor %}
+
+      <button type="submit">Estimate</button>
+    </form>
+
+    {% if result %}
+      <div class="result">{{ result }}</div>
+    {% endif %}
+
+    {% if error %}
+      <div class="error">Error: {{ error }}</div>
+    {% endif %}
+
+    <hr />
+    <h3>API</h3>
+    <p>POST JSON to <code>/api/predict</code> with keys: {{ feature_names|join(', ') }}. Example response: <code>{"predicted_price": 450000.0}</code></p>
+  </body>
+</html> -->
