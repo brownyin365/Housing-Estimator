@@ -1,4 +1,4 @@
-# Jupy — First ML project with Jupyter and TensorFlow\n\nThis small project demonstrates training a tiny TensorFlow model on MNIST inside a Jupyter notebook and via a small script.\n\n## Setup (Windows PowerShell)\n\n1. Create and activate a virtual environment:\n\n```powershell
+# Jupy — First ML project with Jupyter and TensorFlow\n\nThis small project demonstrates training a tiny TensorFlow model on house_price_regression_dataset inside a Jupyter notebook and via a small script.\n\n## Setup (Windows PowerShell)\n\n1. Create and activate a virtual environment:\n\n```powershell
 python -m venv .venv; .\.venv\Scripts\Activate.ps1
 ```
 \n(If your PowerShell blocks scripts, run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` first.)\n\n2. Install dependencies:\n\n```powershell
